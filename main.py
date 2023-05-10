@@ -9,14 +9,14 @@ class myApp:
         self.root.geometry("350x550")
         self.root.title("Calculator-Let's Compute!")
         self.root.resizable(False, False)
-        self.root.config(background='#06010a')
+        self.root.config(background='#262625')
 
         self.input_Frame = tk.Frame(self.root, width=400, height=50)
         self.input_Frame.pack(padx=10, pady=40)
 
         self.input_state = tk.StringVar()
         self.input = tk.Entry(self.input_Frame, textvariable=self.input_state, width=50, font=('Arial', 20),
-                              justify=tk.RIGHT)
+                              justify=tk.RIGHT,bg='black',fg='white')
         self.input.grid(row=0, column=0)
         self.input.pack(ipady=20)
         self.input.focus()
@@ -36,14 +36,22 @@ class myApp:
 
         s = ttk.Style()
         s.theme_use('alt')
-        s.configure('custom.TButton', background='#c4c4c4',relief='flat',font=('Arial',18))
+        s.configure('custom.TButton',relief='flat',font=('Arial',18),focuscolor=s.configure(".")["background"])
+        s.map('custom.TButton',
+              background=[('!active', 'black'), ('active', '#f06502')],
+              foreground=[('!active', 'white'), ('active', 'white')],
+              relief=[('active','flat')])
+        s.configure('e.TButton', background='#f06502',relief='flat',font=('Arial',18),focuscolor=s.configure(".")["background"])
+        s.map('e.TButton',
+              background=[('active', '#a12c02')],
+              foreground=[('active', 'white')],
+              relief=[('active','flat')])
         # ROW - 0
         self.C = ttk.Button(self.buttonFrame, text="C", command=lambda: self.onclick("C"), style='custom.TButton')
         self.C.grid(row=0, column=0, sticky=tk.W + tk.E + tk.N + tk.S)
         self.mod = ttk.Button(self.buttonFrame, text="%", command=lambda: self.onclick("%"), style='custom.TButton')
         self.mod.grid(row=0, column=1, sticky=tk.W + tk.E + tk.N + tk.S)
-        self.delete = ttk.Button(self.buttonFrame, text="Del", command=lambda: self.onclick("Del"), style='custom'
-                                                                                                          '.TButton')
+        self.delete = ttk.Button(self.buttonFrame, text="Del", command=lambda: self.onclick("Del"), style='custom.TButton')
         self.delete.grid(row=0, column=2, sticky=tk.W + tk.E + tk.N + tk.S)
         self.div = ttk.Button(self.buttonFrame, text="/", command=lambda: self.onclick("/"), style='custom.TButton')
         self.div.grid(row=0, column=3, sticky=tk.W + tk.E + tk.N + tk.S)
@@ -85,7 +93,7 @@ class myApp:
         self.zero.grid(row=4, column=1, sticky=tk.W + tk.E + tk.N + tk.S)
         self.dot = ttk.Button(self.buttonFrame, text=".", command=lambda: self.onclick("."), style='custom.TButton')
         self.dot.grid(row=4, column=2, sticky=tk.W + tk.E + tk.N + tk.S)
-        self.equal = ttk.Button(self.buttonFrame, text="=", command=lambda: self.onclick("="), style='custom.TButton')
+        self.equal = ttk.Button(self.buttonFrame, text="=", command=lambda: self.onclick("="), style='e.TButton')
         self.equal.grid(row=4, column=3, sticky=tk.W + tk.E + tk.N + tk.S)
 
         self.root.mainloop()
